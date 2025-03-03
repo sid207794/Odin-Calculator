@@ -1,0 +1,52 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(40, 40, 40);
+    height: 100vh;
+}
+
+#parent {
+    display: flex;
+    flex-direction: column;
+    height: 550px;
+    width: 350px;
+    background-color: black;
+}
+
+#display {
+    display: flex;
+    height: 150px;
+    background-color: aqua;
+}
+
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+#container div {
+    display: flex;
+    background-color: black;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center ;
+}
+
+#container div button {
+    height: 68px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    border: none;
+    background-color: rgb(35, 36, 35);
+    font-size: 30px;
+    color: rgb(240, 240, 240);
+    font-weight: bold;
+    text-align: center;
+}
+
+#container div #press1 {
+    background-color: red;
+}
