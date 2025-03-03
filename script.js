@@ -31,7 +31,7 @@ const operate = function (a, b, c) {
 };
 
 const container = document.querySelector("#container");
-const array = ["AC", "%", "⌫", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "00", "0", ".", "="];
+const array = ["AC", "%", "⌫", "÷", "7", "8", "9", "×", "4", "5", "6", "–", "1", "2", "3", "+", "00", "0", ".", "="];
 for (i=0; i<20; i++) {
     const element = document.createElement("div");
     element.setAttribute("id", `key${i+1}`);
