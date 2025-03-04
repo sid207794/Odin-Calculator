@@ -13,7 +13,7 @@ body {
     height: 600px;
     width: 350px;
     background-color: black;
-    border: solid 5px;
+    border: inset 5px;
     border-color: #00ffffa3;
     border-radius: 20px;
     font-family: sans-serif;
@@ -50,6 +50,7 @@ body {
 
 #display {
     display: flex;
+    flex-wrap: wrap;
     height: 150px;
     background-color: black;
     justify-content: end;
