@@ -26,11 +26,21 @@ body {
     align-items: center;
     font-size: x-large;
     gap: 25px;
+    padding-top: 8px;
 }
 
 #head a {
     text-decoration: none;
+}
+
+#head a button {
+    border-radius: 100%;
+    border: none;
+    height: 40px;
+    aspect-ratio: 1/1;
+    background-color: transparent;
     color: rgb(240, 240, 240);
+    font-size: large;
 }
 
 #head .left1 {
