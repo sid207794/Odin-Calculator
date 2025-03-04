@@ -139,24 +139,88 @@ for (i=1; i<=20; i++) {
 
         press.addEventListener("click", () => {
             display.replaceChildren();
+            arrayDisplay.splice(0, arrayDisplay.length);
         });
     } else if (i === 3) {
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("click", () => {
             display.removeChild(display.lastElementChild);
+            arrayDisplay.pop();
         });
     } else if (i === 20) {
         display.replaceChildren();
+    } else if (i === 12) {
+        const press = document.querySelector(`#press${i}`);
+        
+        press.addEventListener("click", () => {
+            if (typeof arrayDisplay[arrayDisplay.length-1] === "number" || arrayDisplay.length === 0) {
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string") {
+                display.removeChild(display.lastElementChild)
+                arrayDisplay.pop();
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+            }
+        });
+    } else if (i === 2 || (i%4 === 0 && i < 20 && i != 12)) {
+        const press = document.querySelector(`#press${i}`);
+        
+        press.addEventListener("click", () => {
+            if (typeof arrayDisplay[arrayDisplay.length-1] === "number") {
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length > 1) {
+                display.removeChild(display.lastElementChild)
+                arrayDisplay.pop();
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length === 1) {
+                display.replaceChildren();
+                arrayDisplay.length = 0;
+            }
+        });
+    } else if (i === 17) {
+        const press = document.querySelector(`#press${i}`);
+    
+        press.addEventListener("click", () => {
+            const pressText = press.textContent;
+            arrayDisplay.push(parseInt(pressText));
+
+            const displayElement = document.createElement("div");
+            displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+            display.appendChild(displayElement);
+        });
     } else {
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
             const pressText = press.textContent;
-            arrayDisplay.push(pressText);
+            arrayDisplay.push(parseInt(pressText));
+
             const displayElement = document.createElement("div");
-            displayElement.textContent = arrayDisplay.splice(-1);
+            displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
             display.appendChild(displayElement);
         });
     }
 }
+
+/* Calculation */
+console.log(arrayDisplay);
