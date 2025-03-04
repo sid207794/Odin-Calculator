@@ -135,9 +135,17 @@ let arrayDisplay = [];
 
 for (i=1; i<=20; i++) {
     if (i === 1) {
-        display.replaceChildren();
+        const press = document.querySelector(`#press${i}`);
+
+        press.addEventListener("click", () => {
+            display.replaceChildren();
+        });
     } else if (i === 3) {
-        display.replaceChildren();
+        const press = document.querySelector(`#press${i}`);
+
+        press.addEventListener("click", () => {
+            display.removeChild(display.lastElementChild);
+        });
     } else if (i === 20) {
         display.replaceChildren();
     } else {
@@ -152,5 +160,3 @@ for (i=1; i<=20; i++) {
         });
     }
 }
-
-console.log(arrayDisplay);
