@@ -14,9 +14,9 @@ const divide = function (a, b) {
     return a/b;
 };
 
-let numberOne;
+let num1;
 let operator;
-let numberTwo;
+let num2;
 
 const operate = function (a, b, c) {
     if (b === "+") {
@@ -48,7 +48,7 @@ for (const headButt of headButton) {
 
 const container = document.querySelector("#container");
 
-const array = ["AC", "%", "⌫", "÷", "7", "8", "9", "×", "4", "5", "6", "–", "1", "2", "3", "+", "00", "0", ".", "="];
+const array = ["AC", "%", "⌫", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "00", "0", ".", "="];
 
 for (i=0; i<20; i++) {
     const element = document.createElement("div");
@@ -126,3 +126,31 @@ for (i=1; i<=20; i++) {
         });
     }
 }
+
+/* id = display */
+
+const display = document.querySelector("#display");
+
+let arrayDisplay = [];
+
+for (i=1; i<=20; i++) {
+    if (i === 1) {
+        display.replaceChildren();
+    } else if (i === 3) {
+        display.replaceChildren();
+    } else if (i === 20) {
+        display.replaceChildren();
+    } else {
+        const press = document.querySelector(`#press${i}`);
+    
+        press.addEventListener("click", () => {
+            const pressText = press.textContent;
+            arrayDisplay.push(pressText);
+            const displayElement = document.createElement("div");
+            displayElement.textContent = arrayDisplay.splice(-1);
+            display.appendChild(displayElement);
+        });
+    }
+}
+
+console.log(arrayDisplay);
