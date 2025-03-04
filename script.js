@@ -30,6 +30,22 @@ const operate = function (a, b, c) {
     }
 };
 
+/* id = head */
+
+const headButton = document.querySelectorAll(".headButton");
+
+for (const headButt of headButton) {
+    headButt.addEventListener("mouseenter", () => {
+        headButt.style.backgroundColor = "rgba(255, 255, 255, 0.1";
+    });
+
+    headButt.addEventListener("mouseleave", () => {
+        headButt.style.backgroundColor = "transparent";
+    });
+}
+
+/* id = container */
+
 const container = document.querySelector("#container");
 
 const array = ["AC", "%", "⌫", "÷", "7", "8", "9", "×", "4", "5", "6", "–", "1", "2", "3", "+", "00", "0", ".", "="];
@@ -57,40 +73,56 @@ for (i=1; i<=20; i++) {
 
         press.addEventListener("mouseenter", () => {
             press.style.backgroundColor = "rgba(255, 255, 255, 0.17)";
+            press.style.height = "60px";
+            press.style.fontSize = `${(60/68)*20}px`;
         });
 
         press.addEventListener("mouseleave", () => {
             press.style.backgroundColor = "rgb(25, 26, 25)";
+            press.style.height = "68px";
+            press.style.fontSize = "20px";
         });
     } else if (i%4 === 0 && i<20 && i>0) {
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("mouseenter", () => {
             press.style.backgroundColor = "rgba(255, 255, 255, 0.17)";
+            press.style.height = "60px";
+            press.style.fontSize = `${(60/68)*38}px`;
         });
 
         press.addEventListener("mouseleave", () => {
             press.style.backgroundColor = "rgb(25, 26, 25)";
+            press.style.height = "68px";
+            press.style.fontSize = "38px";
         });
     } else if (i === 20) {
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("mouseenter", () => {
             press.style.backgroundColor = "rgba(255, 70, 0, 0.85)";
+            press.style.height = "60px";
+            press.style.fontSize = `${(60/68)*40}px`;
         });
 
         press.addEventListener("mouseleave", () => {
             press.style.backgroundColor = "rgb(255, 70, 0)";
+            press.style.height = "68px";
+            press.style.fontSize = "40px";
         });
     } else {
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("mouseenter", () => {
             press.style.backgroundColor = "rgba(255, 255, 255, 0.25)";
+            press.style.height = "60px";
+            press.style.fontSize = `${(60/68)*30}px`;
         });
 
         press.addEventListener("mouseleave", () => {
             press.style.backgroundColor = "rgb(39, 40, 39)";
+            press.style.height = "68px";
+            press.style.fontSize = "30px";
         });
     }
 }
