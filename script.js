@@ -139,7 +139,7 @@ for (i=1; i<=20; i++) {
 
         press.addEventListener("click", () => {
             display.replaceChildren();
-            arrayDisplay.splice(0, arrayDisplay.length);
+            arrayDisplay.length = 0;
         });
     } else if (i === 3) {
         const press = document.querySelector(`#press${i}`);
@@ -154,7 +154,14 @@ for (i=1; i<=20; i++) {
         const press = document.querySelector(`#press${i}`);
         
         press.addEventListener("click", () => {
-            if (typeof arrayDisplay[arrayDisplay.length-1] === "number" || arrayDisplay.length === 0) {
+            if (typeof arrayDisplay[arrayDisplay.length-1] === "number") {
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+            } else if (arrayDisplay.length === 0) {
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
                 
@@ -162,7 +169,7 @@ for (i=1; i<=20; i++) {
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string") {
-                display.removeChild(display.lastElementChild)
+                display.removeChild(display.lastElementChild);
                 arrayDisplay.pop();
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
@@ -184,7 +191,7 @@ for (i=1; i<=20; i++) {
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length > 1) {
-                display.removeChild(display.lastElementChild)
+                display.removeChild(display.lastElementChild);
                 arrayDisplay.pop();
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
@@ -317,14 +324,7 @@ for (i=1; i<=20; i++) {
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
-            if (typeof arrayDisplay[arrayDisplay.length-1] === "number") {
-                const pressText = press.textContent;
-                arrayDisplay.push(pressText);
-
-                const displayElement = document.createElement("div");
-                displayElement.textContent = ".";
-                display.appendChild(displayElement);
-            } else if (typeof arrayDisplay[arrayDisplay.length-1] != "number" && arrayDisplay[arrayDisplay.length-1] != ".") {
+            if (typeof arrayDisplay[arrayDisplay.length-1] != "number" && arrayDisplay[arrayDisplay.length-1] != ".") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt("0"));
                 arrayDisplay.push(pressText);
@@ -336,6 +336,20 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = ".";
                 display.appendChild(displayElement2);
+            } else if (arrayDisplay.length >= 1 && (!arrayDisplay.includes("."))) {
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = ".";
+                display.appendChild(displayElement);
+            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "number" && (!arrayDisplay.includes("."))) {
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = ".";
+                display.appendChild(displayElement);
             }
         });
     } else {
