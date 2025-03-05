@@ -201,12 +201,98 @@ for (i=1; i<=20; i++) {
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
-            const pressText = press.textContent;
-            arrayDisplay.push(parseInt(pressText));
+            if (arrayDisplay.length === 1 && arrayDisplay[0] != 0 && typeof arrayDisplay[0] != "string") {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+                arrayDisplay.push(parseInt(pressText));
 
-            const displayElement = document.createElement("div");
-            displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
-            display.appendChild(displayElement);
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+
+                const displayElement2 = document.createElement("div");
+                displayElement2.textContent = "0";
+                display.appendChild(displayElement2);
+            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string") {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+            } else if (arrayDisplay.length === 0) {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+            } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] != "string") {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+                arrayDisplay.push(parseInt(pressText));
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+
+                const displayElement2 = document.createElement("div");
+                displayElement2.textContent = "0";
+                display.appendChild(displayElement2);
+            } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] === "string" && arrayDisplay[arrayDisplay.length-1] != 0) {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+                arrayDisplay.push(parseInt(pressText));
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+
+                const displayElement2 = document.createElement("div");
+                displayElement2.textContent = "0";
+                display.appendChild(displayElement2);
+            }
+        });
+    } else if (i === 18) {
+        const press = document.querySelector(`#press${i}`);
+    
+        press.addEventListener("click", () => {
+            if (arrayDisplay.length === 1 && arrayDisplay[0] != 0 && typeof arrayDisplay[0] != "string") {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string") {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+            } else if (arrayDisplay.length === 0) {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+            } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] != "string") {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+            } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] === "string" && arrayDisplay[arrayDisplay.length-1] != 0) {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = "0";
+                display.appendChild(displayElement);
+            }
         });
     } else {
         const press = document.querySelector(`#press${i}`);
