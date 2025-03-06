@@ -336,15 +336,48 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = ".";
                 display.appendChild(displayElement2);
-            } else if (arrayDisplay.length >= 1 && (!arrayDisplay.includes("."))) {
+            } else if (!arrayDisplay.includes(".") || isNaN(arrayDisplay[arrayDisplay.length-1])) {
                 const pressText = press.textContent;
-                arrayDisplay.push(pressText);
+                
+                let hasDecimal = false;
+                for (i = arrayDisplay.length-1; i>=0; i--) {
+                    if (isNaN(arrayDisplay[i]) && arrayDisplay[i] !== ".") {
+                        break;
+                    }
 
-                const displayElement = document.createElement("div");
-                displayElement.textContent = ".";
-                display.appendChild(displayElement);
-            } else if (arrayDisplay.includes(".")) {
+                    if (arrayDisplay[i] === ".") {
+                        hasDecimal = true;
+                        break;
+                    }
+                }
 
+                if (!hasDecimal) {
+                    arrayDisplay.push(pressText);
+                    const displayElement = document.createElement("div");
+                    displayElement.textContent = ".";
+                    display.appendChild(displayElement);
+                }
+            } else if (arrayDisplay.includes(".") && !isNaN(arrayDisplay[arrayDisplay.length-1])) {
+                const pressText = press.textContent;
+                
+                let hasDecimal = false;
+                for (i = arrayDisplay.length-1; i>=0; i--) {
+                    if (isNaN(arrayDisplay[i]) && arrayDisplay[i] !== ".") {
+                        break;
+                    }
+
+                    if (arrayDisplay[i] === ".") {
+                        hasDecimal = true;
+                        break;
+                    }
+                }
+
+                if (!hasDecimal) {
+                    arrayDisplay.push(pressText);
+                    const displayElement = document.createElement("div");
+                    displayElement.textContent = ".";
+                    display.appendChild(displayElement);
+                }
             }
         });
     } else {
