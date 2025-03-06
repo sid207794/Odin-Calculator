@@ -343,13 +343,8 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = ".";
                 display.appendChild(displayElement);
-            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "number" && (!arrayDisplay.includes("."))) {
-                const pressText = press.textContent;
-                arrayDisplay.push(pressText);
+            } else if (arrayDisplay.includes(".")) {
 
-                const displayElement = document.createElement("div");
-                displayElement.textContent = ".";
-                display.appendChild(displayElement);
             }
         });
     } else {
