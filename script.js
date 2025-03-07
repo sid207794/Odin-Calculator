@@ -14,19 +14,25 @@ const divide = function (a, b) {
     return a/b;
 };
 
-let num1;
-let operator;
-let num2;
+const percent = function (a, b) {
+    return (a/100)*b;
+}
+
+let num1 = "";
+let operator = "";
+let num2 = "";
 
 const operate = function (a, b, c) {
     if (b === "+") {
         return add(a, c);
     } else if (b === "-") {
         return sub(a, c);
-    } else if (b === "*") {
+    } else if (b === "×") {
         return multiply(a, c);
-    } else if (b === "/") {
+    } else if (b === "÷") {
         return divide(a, c);
+    } else if (b === "%") {
+        return percent(a, c);
     }
 };
 
@@ -130,6 +136,7 @@ for (i=1; i<=20; i++) {
 /* id = display */
 
 const display = document.querySelector("#display");
+const result = document.querySelector("#result");
 
 let arrayDisplay = [];
 
@@ -139,14 +146,43 @@ for (i=1; i<=20; i++) {
 
         press.addEventListener("click", () => {
             display.replaceChildren();
+            result.replaceChildren();
             arrayDisplay.length = 0;
+            num1 = "";
+            operator = "";
+            num2 = "";
+            changeToNum2 = false;
         });
     } else if (i === 3) {
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("click", () => {
-            display.removeChild(display.lastElementChild);
-            arrayDisplay.pop();
+            if (arrayDisplay.length > 0) {
+                display.removeChild(display.lastElementChild);
+                arrayDisplay.pop();
+                if (num2.length > 0) {
+                    num2 = num2.slice(0, -1);
+                } else if (operator.length > 0) {
+                    operator = operator.slice(0, -1);
+                    if (operator.length === 0) {
+                        changeToNum2 = false;
+                    }
+                } else if (num1.length > 0) {
+                    num1 = num1.slice(0, -1);
+                }
+
+                
+                console.log(`num1: ${num1}, operator: ${operator}, num2: ${num2}`);
+                console.log(operate(Number(num1), operator, Number(num2)));
+                
+
+                const displayResult = document.createElement("div");
+    
+                result.replaceChildren();
+                resultText = operate(Number(num1), operator, Number(num2));
+                displayResult.textContent = resultText;
+                result.appendChild(displayResult);
+            }
         });
     } else if (i === 20) {
         display.replaceChildren();
@@ -161,6 +197,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length === 0) {
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
@@ -168,15 +205,23 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
-            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string") {
+                Calculation(arrayDisplay);
+            } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length > 1) {
                 display.removeChild(display.lastElementChild);
                 arrayDisplay.pop();
+                if (operator.length > 0) {
+                    operator = operator.slice(0, -1);
+                    if (operator.length === 0) {
+                        changeToNum2 = false;
+                    }
+                }
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
                 
                 const displayElement = document.createElement("div");
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             }
         });
     } else if (i === 2 || (i%4 === 0 && i < 20 && i != 12)) {
@@ -190,18 +235,27 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length > 1) {
                 display.removeChild(display.lastElementChild);
                 arrayDisplay.pop();
+                if (operator.length > 0) {
+                    operator = operator.slice(0, -1);
+                    if (operator.length === 0) {
+                        changeToNum2 = false;
+                    }
+                }
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
                 
                 const displayElement = document.createElement("div");
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length === 1) {
                 display.replaceChildren();
                 arrayDisplay.length = 0;
+                Calculation(arrayDisplay);
             }
         });
     } else if (i === 17) {
@@ -220,6 +274,7 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
+                Calculation(arrayDisplay);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay[arrayDisplay.length-1] != ".") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -227,6 +282,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length === 0) {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -234,6 +290,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] != "string") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -246,6 +303,7 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] === "string" && arrayDisplay[arrayDisplay.length-1] != 0) {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -258,6 +316,7 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && arrayDisplay[arrayDisplay.length-2] === ".") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -270,6 +329,7 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
+                Calculation(arrayDisplay);
             }
         });
     } else if (i === 18) {
@@ -283,6 +343,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay[arrayDisplay.length-1] != ".") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -290,6 +351,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length === 0) {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -297,6 +359,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] != "string") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -304,6 +367,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] === "string" && arrayDisplay[arrayDisplay.length-1] != 0) {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -311,6 +375,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && arrayDisplay[arrayDisplay.length-2] === ".") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -318,6 +383,7 @@ for (i=1; i<=20; i++) {
                 const displayElement = document.createElement("div");
                 displayElement.textContent = "0";
                 display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             }
         });
     } else if (i === 19) {
@@ -336,6 +402,7 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = ".";
                 display.appendChild(displayElement2);
+                Calculation(arrayDisplay);
             } else if (!arrayDisplay.includes(".") || isNaN(arrayDisplay[arrayDisplay.length-1])) {
                 const pressText = press.textContent;
                 
@@ -356,6 +423,7 @@ for (i=1; i<=20; i++) {
                     const displayElement = document.createElement("div");
                     displayElement.textContent = ".";
                     display.appendChild(displayElement);
+                    Calculation(arrayDisplay);
                 }
             } else if (arrayDisplay.includes(".") && !isNaN(arrayDisplay[arrayDisplay.length-1])) {
                 const pressText = press.textContent;
@@ -377,6 +445,7 @@ for (i=1; i<=20; i++) {
                     const displayElement = document.createElement("div");
                     displayElement.textContent = ".";
                     display.appendChild(displayElement);
+                    Calculation(arrayDisplay);
                 }
             }
         });
@@ -390,9 +459,48 @@ for (i=1; i<=20; i++) {
             const displayElement = document.createElement("div");
             displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
             display.appendChild(displayElement);
+            Calculation(arrayDisplay);
         });
     }
 }
 
 /* Calculation */
+
+
+
+let changeToNum2 = false;
 console.log(arrayDisplay);
+
+function Calculation(calArray) {
+    let currentvalue = calArray[calArray.length-1];
+    let lastValue = calArray[calArray.length-2];
+
+    if (currentvalue === "." && lastValue === 0 && !changeToNum2) {
+        num1 += "0" + currentvalue;
+    } else if ((typeof currentvalue === "number" || currentvalue === ".") && !changeToNum2) {
+        num1 += currentvalue;
+    } else if (currentvalue === "." && lastValue === 0 && changeToNum2) {
+        num2 += "0" + currentvalue;
+    } else if ((typeof currentvalue === "number" || currentvalue === ".") && changeToNum2) {
+        num2 += currentvalue;
+    } else if (isNaN(currentvalue) && currentvalue !== ".") {
+        if (calArray[calArray.length-1] === "-" && calArray.length === 1) {
+            num1 += calArray[calArray.length-1];
+        } else if (!changeToNum2) {
+            operator += currentvalue;
+            changeToNum2 = true;
+        } else {
+            ;
+        }
+    }
+
+    console.log(`num1: ${num1}, operator: ${operator}, num2: ${num2}`);
+    console.log(operate(Number(num1), operator, Number(num2)));
+
+    const displayResult = document.createElement("div");
+
+    result.replaceChildren();
+    resultText = operate(Number(num1), operator, Number(num2));
+    displayResult.textContent = resultText;
+    result.appendChild(displayResult);
+};
