@@ -149,6 +149,11 @@ for (i=1; i<=20; i++) {
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("click", () => {
+            display.style.fontSize = `${40}px`;
+            result.style.fontSize = `${22}px`;
+            result.style.color = "rgb(145, 145, 145)";
+            display.style.color = "rgb(240, 240, 240)";
+
             display.replaceChildren();
             result.replaceChildren();
             arrayDisplay.length = 0;
@@ -162,12 +167,36 @@ for (i=1; i<=20; i++) {
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("click", () => {
+            display.style.fontSize = `${40}px`;
+            result.style.fontSize = `${22}px`;
+            result.style.color = "rgb(145, 145, 145)";
+            display.style.color = "rgb(240, 240, 240)";
+
             if (arrayDisplay.length > 0) {
                 display.removeChild(display.lastElementChild);
                 arrayDisplay.pop();
-                if (num2.length > 0) {
+                
+                if (merged && operator.length === 0 && num2.length === 0) {
+                    num1 = premergeNum1;
+                    operator = premergeOperator;
+                    num2 = premergeNum2;
+                    merged = false;
+                    
+                    changeToNum2 = true;
+                    firstOpFound = true;
+                    
+                    if (num2.length > 0) {
+                        num2 = num2.slice(0, -1);
+                    } else if (operator.length > 0) {
+                        operator = operator.slice(0, -1);
+                        if (operator.length === 0) {
+                            firstOpFound = false;
+                            changeToNum2 = false;
+                        }
+                    }
+                } else if (num2.length > 0) {
                     num2 = num2.slice(0, -1);
-                } else if (operator.length > 0 && firstOpFound) {
+                } else if (operator.length > 0) {
                     operator = operator.slice(0, -1);
                     if (operator.length === 0) {
                         firstOpFound = false;
@@ -176,22 +205,37 @@ for (i=1; i<=20; i++) {
                 } else if (num1.length > 0) {
                     num1 = num1.slice(0, -1);
                 }
-
-                
+        
                 console.log(`num1: ${num1}, operator: ${operator}, num2: ${num2}`);
-                console.log(operate(Number(num1), operator, Number(num2)));
+                console.log(`changeToNum2: ${changeToNum2}, firstOpFound: ${firstOpFound}, merged: ${merged}`);
                 
-
-                const displayResult = document.createElement("div");
-    
-                result.replaceChildren();
-                resultText = operate(Number(num1), operator, Number(num2));
-                displayResult.textContent = resultText;
-                result.appendChild(displayResult);
+                if ((num1 === "" || num1 === "-") && operator === "" && num2 === "") {
+                    result.replaceChildren();
+                    resultText = "";
+                } else if (operator === "" || num2 === "") {
+                    const displayResult = document.createElement("div");
+                    result.replaceChildren();
+                    resultText = num1;
+                    displayResult.textContent = resultText;
+                    result.appendChild(displayResult);
+                } else {
+                    const displayResult = document.createElement("div");
+                    result.replaceChildren();
+                    resultText = operate(Number(num1) || 0, operator, Number(num2) || 0);
+                    displayResult.textContent = resultText;
+                    result.appendChild(displayResult);
+                }
             }
         });
     } else if (i === 20) {
-        display.replaceChildren();
+        const press = document.querySelector(`#press${i}`);
+        
+        press.addEventListener("click", () => {
+            display.style.fontSize = `${22}px`;
+            result.style.fontSize = `${40}px`;
+            display.style.color = "rgb(145, 145, 145)";
+            result.style.color = "rgb(240, 240, 240)";
+        });
     } else if (i === 12) {
         const press = document.querySelector(`#press${i}`);
         
@@ -525,13 +569,37 @@ for (i=1; i<=20; i++) {
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
-            const pressText = press.textContent;
-            arrayDisplay.push(parseInt(pressText));
+            if (display.style.fontSize === `${22}px`&& result.style.fontSize === `${40}px` && display.style.color === "rgb(145, 145, 145)" && result.style.color === "rgb(240, 240, 240)") {
+                display.style.fontSize = `${40}px`;
+                result.style.fontSize = `${22}px`;
+                result.style.color = "rgb(145, 145, 145)";
+                display.style.color = "rgb(240, 240, 240)";
 
-            const displayElement = document.createElement("div");
-            displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
-            display.appendChild(displayElement);
-            Calculation(arrayDisplay);
+                display.replaceChildren();
+                result.replaceChildren();
+                arrayDisplay.length = 0;
+                num1 = "";
+                operator = "";
+                num2 = "";
+                changeToNum2 = false;
+                firstOpFound = false;
+
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+                Calculation(arrayDisplay);
+            } else {
+                const pressText = press.textContent;
+                arrayDisplay.push(parseInt(pressText));
+
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+                Calculation(arrayDisplay);
+            }
         });
     }
 }
