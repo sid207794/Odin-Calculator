@@ -138,6 +138,10 @@ for (i=1; i<=20; i++) {
 const display = document.querySelector("#display");
 const result = document.querySelector("#result");
 
+let premergeNum1 = "";
+let premergeOperator = "";
+let premergeNum2 = "";
+
 let arrayDisplay = [];
 
 for (i=1; i<=20; i++) {
@@ -152,6 +156,7 @@ for (i=1; i<=20; i++) {
             operator = "";
             num2 = "";
             changeToNum2 = false;
+            firstOpFound = false;
         });
     } else if (i === 3) {
         const press = document.querySelector(`#press${i}`);
@@ -162,9 +167,10 @@ for (i=1; i<=20; i++) {
                 arrayDisplay.pop();
                 if (num2.length > 0) {
                     num2 = num2.slice(0, -1);
-                } else if (operator.length > 0) {
+                } else if (operator.length > 0 && firstOpFound) {
                     operator = operator.slice(0, -1);
                     if (operator.length === 0) {
+                        firstOpFound = false;
                         changeToNum2 = false;
                     }
                 } else if (num1.length > 0) {
@@ -206,6 +212,35 @@ for (i=1; i<=20; i++) {
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
                 Calculation(arrayDisplay);
+            } else if (arrayDisplay[arrayDisplay.length-1] === "." && arrayDisplay.length > 1) {
+                display.removeChild(display.lastElementChild);
+                arrayDisplay.pop();
+                
+                if (operator.length > 0 && !firstOpFound) {
+                    operator = operator.slice(0, -1);
+                    if (operator.length === 0) {
+                        changeToNum2 = false;
+                    }
+                } else if (operator.length > 0 && firstOpFound) {
+                    if (operator.length === 0) {
+                        firstOpFound = true;
+                    }
+                }
+
+                if (!changeToNum2 && !firstOpFound) {
+                    num1 = num1.slice(0, -1);
+                }
+                if (changeToNum2 && firstOpFound && num2.length > 0) {
+                    num2 = num2.slice(0, -1);
+                }
+
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length > 1) {
                 display.removeChild(display.lastElementChild);
                 arrayDisplay.pop();
@@ -213,8 +248,10 @@ for (i=1; i<=20; i++) {
                     operator = operator.slice(0, -1);
                     if (operator.length === 0) {
                         changeToNum2 = false;
+                        firstOpFound = false;
                     }
                 }
+
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
                 
@@ -236,6 +273,35 @@ for (i=1; i<=20; i++) {
                 displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
                 display.appendChild(displayElement);
                 Calculation(arrayDisplay);
+            } else if (arrayDisplay[arrayDisplay.length-1] === "." && arrayDisplay.length > 1) {
+                display.removeChild(display.lastElementChild);
+                arrayDisplay.pop();
+
+                if (operator.length > 0 && !firstOpFound) {
+                    operator = operator.slice(0, -1);
+                    if (operator.length === 0) {
+                        changeToNum2 = false;
+                    }
+                } else if (operator.length > 0 && firstOpFound) {
+                    if (operator.length === 0) {
+                        firstOpFound = true;
+                    }
+                }
+
+                if (!changeToNum2 && !firstOpFound) {
+                    num1 = num1.slice(0, -1);
+                }
+                if (changeToNum2 && firstOpFound && num2.length > 0) {
+                    num2 = num2.slice(0, -1);
+                }
+
+                const pressText = press.textContent;
+                arrayDisplay.push(pressText);
+                
+                const displayElement = document.createElement("div");
+                displayElement.textContent = arrayDisplay[arrayDisplay.length-1];
+                display.appendChild(displayElement);
+                Calculation(arrayDisplay);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay.length > 1) {
                 display.removeChild(display.lastElementChild);
                 arrayDisplay.pop();
@@ -243,8 +309,10 @@ for (i=1; i<=20; i++) {
                     operator = operator.slice(0, -1);
                     if (operator.length === 0) {
                         changeToNum2 = false;
+                        firstOpFound = false;
                     }
                 }
+                
                 const pressText = press.textContent;
                 arrayDisplay.push(pressText);
                 
@@ -275,6 +343,7 @@ for (i=1; i<=20; i++) {
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
                 Calculation(arrayDisplay);
+                Calculation(arrayDisplay);
             } else if (typeof arrayDisplay[arrayDisplay.length-1] === "string" && arrayDisplay[arrayDisplay.length-1] != ".") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -304,6 +373,7 @@ for (i=1; i<=20; i++) {
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
                 Calculation(arrayDisplay);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && typeof arrayDisplay[arrayDisplay.length-2] === "string" && arrayDisplay[arrayDisplay.length-1] != 0) {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -317,6 +387,7 @@ for (i=1; i<=20; i++) {
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
                 Calculation(arrayDisplay);
+                Calculation(arrayDisplay);
             } else if (arrayDisplay.length > 1 && arrayDisplay[arrayDisplay.length-2] === ".") {
                 const pressText = press.textContent;
                 arrayDisplay.push(parseInt(pressText));
@@ -329,6 +400,7 @@ for (i=1; i<=20; i++) {
                 const displayElement2 = document.createElement("div");
                 displayElement2.textContent = "0";
                 display.appendChild(displayElement2);
+                Calculation(arrayDisplay);
                 Calculation(arrayDisplay);
             }
         });
@@ -466,31 +538,43 @@ for (i=1; i<=20; i++) {
 
 /* Calculation */
 
-
-
 let changeToNum2 = false;
+let firstOpFound = false;
+let merged = false;
 console.log(arrayDisplay);
 
 function Calculation(calArray) {
     let currentvalue = calArray[calArray.length-1];
     let lastValue = calArray[calArray.length-2];
 
-    if (currentvalue === "." && lastValue === 0 && !changeToNum2) {
+    if (currentvalue === "." && lastValue === 0 && num1.length === 0 && !changeToNum2) {
         num1 += "0" + currentvalue;
+    } else if (currentvalue === "." && num1.length > 0 && !changeToNum2) {
+        num1 += currentvalue;
     } else if ((typeof currentvalue === "number" || currentvalue === ".") && !changeToNum2) {
         num1 += currentvalue;
-    } else if (currentvalue === "." && lastValue === 0 && changeToNum2) {
+    } else if (currentvalue === "." && lastValue === 0 && num2.length === 0 && changeToNum2) {
         num2 += "0" + currentvalue;
+    } else if (currentvalue === "." && num2.length > 0 && !changeToNum2) {
+        num2 += currentvalue;
     } else if ((typeof currentvalue === "number" || currentvalue === ".") && changeToNum2) {
         num2 += currentvalue;
     } else if (isNaN(currentvalue) && currentvalue !== ".") {
         if (calArray[calArray.length-1] === "-" && calArray.length === 1) {
             num1 += calArray[calArray.length-1];
-        } else if (!changeToNum2) {
+        } else if (!changeToNum2 && !firstOpFound) {
             operator += currentvalue;
             changeToNum2 = true;
-        } else {
-            ;
+            firstOpFound = true;
+        } else if (firstOpFound) {
+            premergeNum1 = num1;
+            premergeOperator = operator;
+            premergeNum2 = num2;
+
+            num1 = resultText;
+            operator = currentvalue;
+            num2 = "";
+            merged = true;
         }
     }
 
