@@ -215,15 +215,25 @@ for (i=1; i<=20; i++) {
                 } else if (operator === "" || num2 === "") {
                     const displayResult = document.createElement("div");
                     result.replaceChildren();
-                    resultText = num1;
-                    displayResult.textContent = resultText;
-                    result.appendChild(displayResult);
+                    resultText = Number(num1);
+                    if (Number.isInteger(resultText)) {
+                        displayResult.textContent = resultText;
+                        result.appendChild(displayResult);
+                    } else {
+                        displayResult.textContent = resultText.toFixed(2);
+                        result.appendChild(displayResult);
+                    }
                 } else {
                     const displayResult = document.createElement("div");
                     result.replaceChildren();
                     resultText = operate(Number(num1) || 0, operator, Number(num2) || 0);
-                    displayResult.textContent = resultText;
-                    result.appendChild(displayResult);
+                    if (Number.isInteger(resultText)) {
+                        displayResult.textContent = resultText;
+                        result.appendChild(displayResult);
+                    } else {
+                        displayResult.textContent = resultText.toFixed(2);
+                        result.appendChild(displayResult);
+                    }
                 }
             }
         });
@@ -653,6 +663,11 @@ function Calculation(calArray) {
 
     result.replaceChildren();
     resultText = operate(Number(num1), operator, Number(num2));
-    displayResult.textContent = resultText;
-    result.appendChild(displayResult);
+    if (Number.isInteger(resultText)) {
+        displayResult.textContent = resultText;
+        result.appendChild(displayResult);
+    } else {
+        displayResult.textContent = resultText.toFixed(2);
+        result.appendChild(displayResult);
+    }
 };
