@@ -1,3 +1,4 @@
+// Functions to perform operations
 const add = function (a, b) {
     return a+b;
 };
@@ -18,10 +19,12 @@ const percent = function (a, b) {
     return (a/100)*b;
 }
 
+// Variables to store initial values
 let num1 = "";
 let operator = "";
 let num2 = "";
 
+// Function to return operation results
 const operate = function (a, b, c) {
     if (b === "+") {
         return add(a, c);
@@ -36,8 +39,7 @@ const operate = function (a, b, c) {
     }
 };
 
-/* id = head */
-
+// DOM style for element with id = "head"
 const headButton = document.querySelectorAll(".headButton");
 
 for (const headButt of headButton) {
@@ -50,8 +52,7 @@ for (const headButt of headButton) {
     });
 }
 
-/* id = container */
-
+// DOM style for creating child elements of id = "container"
 const container = document.querySelector("#container");
 
 const array = ["AC", "%", "⌫", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "00", "0", ".", "="];
@@ -73,6 +74,7 @@ for (i=0; i<20; i++) {
     key.appendChild(button);
 }
 
+// DOM style for animating child elements of id = "container"
 for (i=1; i<=20; i++) {
     if (i === 1 || i === 2 || i === 3) {
         const press = document.querySelector(`#press${i}`);
@@ -133,19 +135,20 @@ for (i=1; i<=20; i++) {
     }
 }
 
-/* id = display */
-
 const display = document.querySelector("#display");
 const result = document.querySelector("#result");
 
+// Variables to store values of num1, operator and num2 before "merged = true"
 let premergeNum1 = "";
 let premergeOperator = "";
 let premergeNum2 = "";
 
 let arrayDisplay = [];
 
+/* Add event listeners to add "textContent" of each child element of element with id = "container"
+into element with id = "display" and as seperate indices in "arrayDisplay" */
 for (i=1; i<=20; i++) {
-    if (i === 1) {
+    if (i === 1) { // AC button
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("click", () => {
@@ -163,7 +166,7 @@ for (i=1; i<=20; i++) {
             changeToNum2 = false;
             firstOpFound = false;
         });
-    } else if (i === 3) {
+    } else if (i === 3) { // Backspace button
         const press = document.querySelector(`#press${i}`);
 
         press.addEventListener("click", () => {
@@ -237,7 +240,7 @@ for (i=1; i<=20; i++) {
                 }
             }
         });
-    } else if (i === 20) {
+    } else if (i === 20) { // Equals button
         const press = document.querySelector(`#press${i}`);
         
         press.addEventListener("click", () => {
@@ -246,7 +249,7 @@ for (i=1; i<=20; i++) {
             display.style.color = "rgb(145, 145, 145)";
             result.style.color = "rgb(240, 240, 240)";
         });
-    } else if (i === 12) {
+    } else if (i === 12) { // Subtraction operator button
         const press = document.querySelector(`#press${i}`);
         
         press.addEventListener("click", () => {
@@ -315,7 +318,7 @@ for (i=1; i<=20; i++) {
                 Calculation(arrayDisplay);
             }
         });
-    } else if (i === 2 || (i%4 === 0 && i < 20 && i != 12)) {
+    } else if (i === 2 || (i%4 === 0 && i < 20 && i != 12)) { // Percentage, Division, Multiplication and Addition operator button
         const press = document.querySelector(`#press${i}`);
         
         press.addEventListener("click", () => {
@@ -380,7 +383,7 @@ for (i=1; i<=20; i++) {
                 Calculation(arrayDisplay);
             }
         });
-    } else if (i === 17) {
+    } else if (i === 17) { // Double zero button
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
@@ -458,7 +461,7 @@ for (i=1; i<=20; i++) {
                 Calculation(arrayDisplay);
             }
         });
-    } else if (i === 18) {
+    } else if (i === 18) { // Single zero button
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
@@ -512,7 +515,7 @@ for (i=1; i<=20; i++) {
                 Calculation(arrayDisplay);
             }
         });
-    } else if (i === 19) {
+    } else if (i === 19) { // Decimal button
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
@@ -575,7 +578,7 @@ for (i=1; i<=20; i++) {
                 }
             }
         });
-    } else {
+    } else { // All number buttons
         const press = document.querySelector(`#press${i}`);
     
         press.addEventListener("click", () => {
@@ -614,13 +617,15 @@ for (i=1; i<=20; i++) {
     }
 }
 
-/* Calculation */
-
 let changeToNum2 = false;
 let firstOpFound = false;
 let merged = false;
+
 console.log(arrayDisplay);
 
+/* Function to merge each index of "arrayDisplay" with a number or decimal element into one string while seperating the operators
+between each two group of numbers and storing their values in seperate variable defined further above. After getting result of an
+operation assign the result as num1 and store premerged values of these variables into new seperate varaibles */
 function Calculation(calArray) {
     let currentvalue = calArray[calArray.length-1];
     let lastValue = calArray[calArray.length-2];
