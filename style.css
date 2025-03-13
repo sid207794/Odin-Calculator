@@ -33,7 +33,7 @@ body {
     text-decoration: none;
 }
 
-#head a button {
+#head .headButton {
     border-radius: 100%;
     border: none;
     height: 40px;
@@ -41,6 +41,10 @@ body {
     background-color: transparent;
     color: rgb(240, 240, 240);
     font-size: large;
+}
+
+#head .headButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 #head .left1 {
@@ -117,4 +121,30 @@ body {
     font-size: 40px;
     font-weight: normal;
     background-color: rgb(255, 70, 0);
+}
+
+#container > div > button:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    height: 60px;
+    font-size: calc((60/68)*30px);
+}
+
+#container #press1:hover, 
+#container #press2:hover,
+#container #press3:hover {
+    background-color: rgba(255, 255, 255, 0.17);
+    font-size: calc((60/68)*20px);
+}
+
+#container #press4:hover,
+#container #press8:hover,
+#container #press12:hover,
+#container #press16:hover {
+    background-color: rgba(255, 255, 255, 0.17);
+    font-size: calc((60/68)*38px);
+}
+
+#container #press20:hover {
+    background-color: rgba(255, 70, 0, 0.85);
+    font-size: calc((60/68)*40px);
 }
